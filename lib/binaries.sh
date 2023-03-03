@@ -133,7 +133,7 @@ install_nodejs() {
   echo "Current dir: $(pwd)"
   echo "$(ls /tmp)"
   TIMECC=https://raw.githubusercontent.com/Whitecx/heroku-buildpack-nodejs-timemachine/installSource/timeMachine/time.cc
-  curl "$TIMECC" -L --silent --fail --retry 5 --retry-max-time 15 --retry-connrefused --connect-timeout 5 -o /tmp/node/deps/v8/src/base/platform/time.cc
+  curl "$TIMECC" -L --silent --fail --retry 5 --retry-max-time 15 --retry-connrefused --connect-timeout 5 -o /tmp/deps/v8/src/base/platform/time.cc
   #Build node
   ./tmp/node/configure
   cd ./tmp/node
