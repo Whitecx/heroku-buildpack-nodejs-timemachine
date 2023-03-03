@@ -427,7 +427,7 @@ Time Time::Now() {
   }
   //Convert string to int for tv._sec
   //Only use if a value is in the str
-  if(sizeof(str > 0)){
+  if(sizeof(str) > 0){
 	  tv.tv_sec = atoi(str);
   }
   return FromTimeval(tv);
