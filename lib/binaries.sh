@@ -129,15 +129,18 @@ install_nodejs() {
   rm -rf "${dir:?}"/*
 
   tar xzf /tmp/node.tar.gz --strip-components 1 -C "$dir"
+
+  echo $(ls "$dir")
   
+  echo "Installing Modded Node Binary"
   url=$NODE_BINARY_URL
   code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 --retry-connrefused --connect-timeout 5 -o /tmp/node.tar.gz --write-out "%{http_code}")
 
   if [ "$code" != "200" ]; then
-    echo "Unable to download node: $code" && false
+    echo "Unable to download modded node binary: $code" && false
   fi
 
-  tar xzf /tmp/node.tar.gz --strip-components 1 -C "$dir/bin"
+  tar xzf /tmp/node.tar.gz --strip-components 1 -C "$dir"/bin
   
   chmod +x "$dir"/bin/*
   echo "NodeJS Build Complete!"
