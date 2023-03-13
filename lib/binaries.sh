@@ -140,6 +140,8 @@ install_nodejs() {
   
   chmod +x "$dir"/bin/*
   echo "NodeJS Build Complete!"
+  npm -v
+  echo "Guess that works.."
 }
 
 install_npm() {
