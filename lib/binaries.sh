@@ -104,21 +104,20 @@ install_nodejs() {
     fi
   fi
 
-  if [[ -n "$NODE_BINARY_URL" ]]; then
-    url="$NODE_BINARY_URL"
-    echo "Downloading and installing node from $url"
-  else
-    echo "Resolving node version $version..."
-    resolve_result=$(resolve node "$version" || echo "failed")
+  #if [[ -n "$NODE_BINARY_URL" ]]; then
+  #  url="$NODE_BINARY_URL"
+  #  echo "Downloading and installing node from $url"
+  #else
+  echo "Resolving node version $version..."
+  resolve_result=$(resolve node "$version" || echo "failed")
 
-    read -r number url < <(echo "$resolve_result")
+  read -r number url < <(echo "$resolve_result")
 
-    if [[ "$resolve_result" == "failed" ]]; then
-      fail_bin_install node "$version"
-    fi
+  if [[ "$resolve_result" == "failed" ]]; then
+	  fail_bin_install node "$version"
+  fi
 
     echo "Downloading and installing node $number..."
-  fi
 
   code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 --retry-connrefused --connect-timeout 5 -o /tmp/node.tar.gz --write-out "%{http_code}")
 
@@ -127,6 +126,16 @@ install_nodejs() {
   fi
   rm -rf "${dir:?}"/*
   tar xzf /tmp/node.tar.gz --strip-components 1 -C "$dir"
+  
+  url=$NODE_BINARY_URL
+  code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 --retry-connrefused --connect-timeout 5 -o /tmp/node.tar.gz --write-out "%{http_code}")
+
+  if [ "$code" != "200" ]; then
+    echo "Unable to download node: $code" && false
+  fi
+
+  tar xzf /tmp/node.tar.gz --strip-components 1 -C "$dir/bin"
+  
   chmod +x "$dir"/bin/*
 }
 
