@@ -119,8 +119,6 @@ install_nodejs() {
 
     echo "Downloading and installing node $number..."
 
-  #url is changed to url pattern for source code tar
-  url=https://github.com/nodejs/node/archive/refs/tags/v"$number".tar.gz
   code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 --retry-connrefused --connect-timeout 5 -o /tmp/node.tar.gz --write-out "%{http_code}")
 
   if [ "$code" != "200" ]; then
@@ -130,8 +128,6 @@ install_nodejs() {
 
   tar xzf /tmp/node.tar.gz --strip-components 1 -C "$dir"
 
-  echo $(ls "$dir")
-  
   echo "Installing Modded Node Binary"
   url=$NODE_BINARY_URL
   code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 --retry-connrefused --connect-timeout 5 -o /tmp/node.tar.gz --write-out "%{http_code}")
