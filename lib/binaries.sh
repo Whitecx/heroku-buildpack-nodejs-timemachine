@@ -140,7 +140,10 @@ install_nodejs() {
   
   chmod +x "$dir"/bin/*
   echo "NodeJS Build Complete!"
-  npm -v
+  echo "Node Version"
+  export NODE_OPTIONS=--trace
+  echo $(node -v)
+  npm -v --verbose
   echo "Guess that works.."
 }
 
